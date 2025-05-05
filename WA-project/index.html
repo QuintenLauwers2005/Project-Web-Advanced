@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Web Advanced</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <header>
+        <h1>Movie Explorer</h1>
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="Wat zoek je?">
+            <button type="submit">zoeken</button>
+        </form>
+    </header>
+    <main>
+        <section class="filters">
+            <label for="sort-options">Sorteren op:</label>
+            <select id="sort-options">
+              <option value="az">Titel A-Z</option>
+              <option value="za">Titel Z-A</option>
+              <option value="recent">Meest recent</option>
+              <option value="oldest">Oudste</option>
+              <option value="rating">Beste beoordeling</option>
+            </select>
+          </section>
+          
+        <div id="movie-container" class="movie-grid"></div>
+    </main>
+
+    <script type="module" src="src/APP.js"></script>
+</body>
+</html>

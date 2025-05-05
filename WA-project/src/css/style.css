@@ -1,0 +1,71 @@
+body{
+font-family: Arial, Helvetica, sans-serif;
+background-color: white;
+margin: 0;
+padding: 0;
+}
+
+header {
+    font-family:'Courier New', Courier, monospace;
+    background: #101623;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: center;
+    text-shadow: 
+        0 0 5px #0ff,
+        0 0 10px #0ff,
+        0 0 20px #0ff,
+        0 0 40px #0ff,
+        0 0 80px #0ff;
+}
+
+form{
+    margin-top: 1rem;
+}
+
+input, button{
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.movie-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.movie-card{
+    background: rgb(228, 228, 228);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    filter: brightness(90%);
+    cursor: pointer;
+  }
+
+.movie-card img {
+max-width: 100%;
+border-radius: 8px;
+}
+
+.favorite-btn {
+margin-top: 0.5rem;
+background: none;
+border: none;
+font-size: 1.2rem;
+cursor: pointer;
+}
+
+.filters {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
