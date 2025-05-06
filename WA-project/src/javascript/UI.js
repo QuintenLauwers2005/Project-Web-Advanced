@@ -8,13 +8,15 @@ export function renderMovies(movies, container) {
         card.className = 'movie-card';
         card.innerHTML = `
             <img src="${IMG_BASE_URL}${movie.poster_path}" alt="${movie.title}">
+            <div>
             <h3>${movie.title}</h3>
-            <p>Release: ${movie.release_date}</p>
-            <p>Score: ${movie.vote_average}</p>
+            <p><strong>Release:</strong><br>${movie.release_date}</p>
+            <p><strong>Score:</strong><br>${movie.vote_average}</p>
             <button class="favorite-btn" data-id="${movie.id}">
-                ${isFavorite(movie.id) ? '❤️ Verwijderen' : '🤍 Favoriet'}
+            ${isFavorite(movie.id) ? '❤️ Verwijderen' : '🤍 Favoriet'}
             </button>
-        `;
+            </div>`;
+            
         container.appendChild(card);
     });
 
