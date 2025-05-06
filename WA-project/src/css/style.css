@@ -68,4 +68,42 @@ cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .movie-grid {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+  
+    .movie-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: left;
+    }
+  
+    .movie-card img {
+      width: 100px;
+      height: auto;
+      flex-shrink: 0;
+      border-radius: 8px;
+    }
+  
+    .movie-card h3,
+    .movie-card p,
+    .favorite-btn {
+      margin: 0.2rem 0;
+    }
+  
+    .movie-card > div {
+      display: flex;
+      flex-direction: column;
+    }
   }
+  
