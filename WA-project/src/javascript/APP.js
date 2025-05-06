@@ -19,7 +19,13 @@ searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const query = searchInput.value.trim();
     if (!query) return;
+
     currentMovies = await searchMovies(query);
+
+    if (!currentMovies || currentMovies.length === 0) {
+        alert("Geen films gevonden met deze titel.");
+        return;
+    }
     renderMovies(currentMovies, movieContainer);
 });
 
