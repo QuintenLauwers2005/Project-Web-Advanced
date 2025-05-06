@@ -6,15 +6,19 @@ console.log("API key:", API_KEY);
 
 export async function fetchPopularMovies() {
     try {
-        const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
-        const data = await response.json();
-        console.log("Populaire films:", data);
-        return data.results;
+      const response1 = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
+      const data1 = await response1.json();
+  
+      const response2 = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=2`);
+      const data2 = await response2.json();
+  
+      const combined = [...data1.results, ...data2.results];
+      return combined.slice(0, 24);
     } catch (error) {
-        console.error("Fout bij ophalen populaire films:", error);
-        return [];
+      console.error("Fout bij ophalen populaire films:", error);
+      return [];
     }
-}
+  } 
 
 export async function searchMovies(query) {
     const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`);
