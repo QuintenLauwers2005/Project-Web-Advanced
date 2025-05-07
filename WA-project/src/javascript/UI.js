@@ -43,7 +43,15 @@ function attachFavoriteButtons() {
 function getMovieFromDOM(button) {
     const card = button.closest('.movie-card');
     const title = card.querySelector('h3').innerText;
-    const release_date = card.querySelector('p').innerText.replace('Release: ', '');
+    const releaseText = card.querySelector('p:nth-of-type(1)').innerText.replace('Release:', '').trim();
+    const scoreText = card.querySelector('p:nth-of-type(2)').innerText.replace('Score:', '').trim();
     const img = card.querySelector('img').getAttribute('src');
-    return { id: parseInt(button.getAttribute('data-id')), title, release_date, poster_path: img.replace(IMG_BASE_URL, '') };
+    
+    return {
+        id: parseInt(button.getAttribute('data-id')),
+        title,
+        release_date: releaseText,
+        vote_average: parseFloat(scoreText),
+        poster_path: img.replace(IMG_BASE_URL, '')
+    };
 }

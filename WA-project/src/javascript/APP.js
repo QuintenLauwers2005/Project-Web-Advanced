@@ -37,7 +37,8 @@ genreButtons.forEach(button => {
     button.addEventListener('click', async () => {
         const genreId = button.dataset.id;
         const movies = await fetchMoviesByGenre(genreId);
-        renderMovies(movies, movieContainer);
+        currentMovies = movies;
+        renderMovies(currentMovies, movieContainer);
     });
 });
 
@@ -73,5 +74,6 @@ const favoritesBtn = document.getElementById('favorites-btn');
 
 favoritesBtn.addEventListener('click', () => {
     const favoriteMovies = getFavorites();
-    renderMovies(favoriteMovies, movieContainer);
+    currentMovies = favoriteMovies;
+    renderMovies(currentMovies, movieContainer);
 });
