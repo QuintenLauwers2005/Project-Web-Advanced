@@ -1,5 +1,6 @@
 import { fetchPopularMovies, searchMovies, fetchMoviesByGenre } from './API.js';
 import { renderMovies } from './UI.js';
+import { getFavorites } from './STORAGE.js';
 
 const movieContainer = document.getElementById('movie-container');
 const searchForm = document.getElementById('search-form');
@@ -62,7 +63,14 @@ function sortMovies(option, movies) {
     return sorted;
 }
 
-sortSelect.addEventListener('change', () => {
-    const sorted = sortMovies(sortSelect.value, currentMovies);
-    renderMovies(sorted, movieContainer);
+sortSelect.addEventListener('change', async () => {
+    const option = sortSelect.value;
+
+    if (option === 'favorites') {
+        const favoriteMovies = getFavorites();
+        renderMovies(favoriteMovies, movieContainer);
+    } else {
+        const sorted = sortMovies(option, currentMovies);
+        renderMovies(sorted, movieContainer);
+    }
 });
