@@ -20,6 +20,12 @@ export async function fetchPopularMovies() {
     }
   } 
 
+  export async function fetchMoviesByGenre(genreId) {
+    const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&language=en-US&page=1`);
+    const data = await response.json();
+    return data.results;
+}
+
 export async function searchMovies(query) {
     const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1`);
     const data = await response.json();

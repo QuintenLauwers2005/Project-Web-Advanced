@@ -70,6 +70,19 @@ cursor: pointer;
     gap: 0.5rem;
 }
 
+.genre-btn {
+  padding: 0.5rem 1rem;
+  margin: 0.2rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.genre-btn:hover {
+  background-color: #ddd;
+}
+
 @media (max-width: 768px) {
     .movie-grid {
       display: flex;

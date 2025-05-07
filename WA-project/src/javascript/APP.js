@@ -1,10 +1,11 @@
-import { fetchPopularMovies, searchMovies } from './API.js';
+import { fetchPopularMovies, searchMovies, fetchMoviesByGenre } from './API.js';
 import { renderMovies } from './UI.js';
 
 const movieContainer = document.getElementById('movie-container');
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort-options');
+const genreButtons = document.querySelectorAll('.genre-btn');
 let currentMovies = [];
 
 console.log('APP.js is loaded');
@@ -30,6 +31,14 @@ searchForm.addEventListener('submit', async (e) => {
 });
 
 init();
+
+genreButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+        const genreId = button.dataset.id;
+        const movies = await fetchMoviesByGenre(genreId);
+        renderMovies(movies, movieContainer);
+    });
+});
 
 function sortMovies(option, movies) {
     const sorted = [...movies];
