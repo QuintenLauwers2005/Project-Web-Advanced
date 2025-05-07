@@ -63,11 +63,22 @@ font-size: 1.2rem;
 cursor: pointer;
 }
 
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
 .filters {
-    margin: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.genres {
+  display: flex;
+  gap: 0.5rem; 
+  flex-wrap: wrap; 
 }
 
 .genre-btn {

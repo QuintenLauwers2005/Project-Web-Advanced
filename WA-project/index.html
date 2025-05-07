@@ -15,26 +15,28 @@
         </form>
     </header>
     <main>
-        <section class="filters">
-            <label for="sort-options">Sorteren op:</label>
-            <select id="sort-options">
-              <option value="az">Titel A-Z</option>
-              <option value="za">Titel Z-A</option>
-              <option value="recent">Meest recent</option>
-              <option value="oldest">Oudste</option>
-              <option value="rating">Beste beoordeling</option>
-              <option value="favorites">Favorieten</option>
-            </select>
-          </section>
-
-          <section class="genres">
-            <button class="genre-btn" data-id="28">Actie</button>
-            <button class="genre-btn" data-id="35">Komedie</button>
-            <button class="genre-btn" data-id="18">Drama</button>
-            <button class="genre-btn" data-id="27">Horror</button>
-        </section>
-          
-        <div id="movie-container" class="movie-grid"></div>
+        <div class="filter-container">
+            <section class="filters">
+              <label for="sort-options">Sorteren op:</label>
+              <select id="sort-options">
+                <option value="az">Titel A-Z</option>
+                <option value="za">Titel Z-A</option>
+                <option value="recent">Meest recent</option>
+                <option value="oldest">Oudste</option>
+                <option value="rating">Beste beoordeling</option>
+                <option value="favorites">❤️ Favorieten</option>
+              </select>
+            </section>
+        
+            <section class="genres">
+              <button class="genre-btn" data-id="28">Actie</button>
+              <button class="genre-btn" data-id="35">Komedie</button>
+              <button class="genre-btn" data-id="18">Drama</button>
+              <button class="genre-btn" data-id="27">Horror</button>
+            </section>
+          </div>
+        
+          <div id="movie-container" class="movie-grid"></div>
     </main>
 
     <script type="module" src="src/javascript/APP.js"></script>
