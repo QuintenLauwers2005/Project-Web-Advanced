@@ -63,14 +63,15 @@ function sortMovies(option, movies) {
     return sorted;
 }
 
-sortSelect.addEventListener('change', async () => {
+sortSelect.addEventListener('change', () => {
     const option = sortSelect.value;
+    const sorted = sortMovies(option, currentMovies);
+    renderMovies(sorted, movieContainer);
+});
 
-    if (option === 'favorites') {
-        const favoriteMovies = getFavorites();
-        renderMovies(favoriteMovies, movieContainer);
-    } else {
-        const sorted = sortMovies(option, currentMovies);
-        renderMovies(sorted, movieContainer);
-    }
+const favoritesBtn = document.getElementById('favorites-btn');
+
+favoritesBtn.addEventListener('click', () => {
+    const favoriteMovies = getFavorites();
+    renderMovies(favoriteMovies, movieContainer);
 });

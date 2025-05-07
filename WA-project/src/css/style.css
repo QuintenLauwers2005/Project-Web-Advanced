@@ -63,6 +63,21 @@ font-size: 1.2rem;
 cursor: pointer;
 }
 
+#favorites-btn {
+  background-color: red;
+  color: white;
+  padding: 0.5em 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0.2rem;
+}
+
+#favorites-btn:hover {
+  background-color: darkred;
+  color: white;
+}
+
 .filter-container {
   display: flex;
   align-items: center;
