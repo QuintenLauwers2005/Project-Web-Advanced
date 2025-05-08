@@ -34,11 +34,15 @@ searchForm.addEventListener('submit', async (e) => {
 init();
 
 genreButtons.forEach(button => {
-    button.addEventListener('click', async () => {
-        const genreId = button.dataset.id;
-        const movies = await fetchMoviesByGenre(genreId);
-        currentMovies = movies;
-        renderMovies(currentMovies, movieContainer);
+    button.addEventListener('click', () => {
+        const genreId = parseInt(button.dataset.id);
+        const filtered = currentMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(genreId));
+        
+        if (filtered.length === 0) {
+            alert('Geen films gevonden in dit genre.');
+        }
+
+        renderMovies(filtered, movieContainer);
     });
 });
 

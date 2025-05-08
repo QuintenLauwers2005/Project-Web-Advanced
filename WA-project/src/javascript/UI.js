@@ -6,6 +6,7 @@ export function renderMovies(movies, container) {
     movies.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'movie-card';
+        card.setAttribute('data-genres', JSON.stringify(movie.genre_ids || []));
         card.innerHTML = `
             <img src="${IMG_BASE_URL}${movie.poster_path}" alt="${movie.title}">
             <div>
@@ -46,12 +47,17 @@ function getMovieFromDOM(button) {
     const releaseText = card.querySelector('p:nth-of-type(1)').innerText.replace('Release:', '').trim();
     const scoreText = card.querySelector('p:nth-of-type(2)').innerText.replace('Score:', '').trim();
     const img = card.querySelector('img').getAttribute('src');
-    
-    return {
+    const genreIds = JSON.parse(card.getAttribute('data-genres') || '[]');
+
+    const movieObj = {
         id: parseInt(button.getAttribute('data-id')),
         title,
         release_date: releaseText,
         vote_average: parseFloat(scoreText),
-        poster_path: img.replace(IMG_BASE_URL, '')
+        poster_path: img.replace(IMG_BASE_URL, ''),
+        genre_ids: genreIds
     };
+
+    console.log("getMovieFromDOM geeft terug:", movieObj);
+    return movieObj;
 }
