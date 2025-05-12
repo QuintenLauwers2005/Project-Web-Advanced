@@ -13,6 +13,8 @@ export function renderMovies(movies, container) {
             <h3>${movie.title}</h3>
             <p><strong>Release:</strong><br>${movie.release_date}</p>
             <p><strong>Score:</strong><br>${movie.vote_average}</p>
+            <p><strong>Director:</Strong><br>${movie.director_name}</p>
+            <p><strong>Actor:</Strong><br>${movie.actor_name}</p>
             <button class="favorite-btn" data-id="${movie.id}">
             ${isFavorite(movie.id) ? '❤️ Verwijderen' : '🤍 Favoriet'}
             </button>

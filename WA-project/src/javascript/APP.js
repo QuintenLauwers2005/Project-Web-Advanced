@@ -1,4 +1,4 @@
-import { fetchPopularMovies, searchMovies, fetchMoviesByGenre } from './API.js';
+import { fetchPopularMovies,fetchMoviesByGenre, searchMovies, fetchCredits } from './API.js';
 import { renderMovies } from './UI.js';
 import { getFavorites } from './STORAGE.js';
 
@@ -7,14 +7,26 @@ const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort-options');
 const genreButtons = document.querySelectorAll('.genre-btn');
+const favoritesBtn = document.getElementById('favorites-btn');
+const resetBtn = document.getElementById('reset-btn');
+
 let currentMovies = [];
+let originalMovies = [];
+let currentView = 'popular';
 
 console.log('APP.js is loaded');
 
 async function init() {
-    currentMovies = await fetchPopularMovies();
-    console.log("Fetched movies:", currentMovies);
-    renderMovies(currentMovies, movieContainer);
+    const popular = await fetchPopularMovies();
+    const enriched = await enrichMoviesWithCredits(popular);
+
+    originalMovies = [...enriched];
+    currentMovies = [...enriched];
+    currentView = 'popular';
+
+    const sortOption = sortSelect.value;
+    const sorted = sortMovies(sortOption, currentMovies);
+    renderMovies(sorted.slice(0, 24), movieContainer);
 }
 
 searchForm.addEventListener('submit', async (e) => {
@@ -22,33 +34,89 @@ searchForm.addEventListener('submit', async (e) => {
     const query = searchInput.value.trim();
     if (!query) return;
 
-    currentMovies = await searchMovies(query);
+    let found = await searchMovies(query);
+    found = await enrichMoviesWithCredits(found);
+    currentMovies = found;
+    currentView = 'search';
 
     if (!currentMovies || currentMovies.length === 0) {
         alert("Geen films gevonden met deze titel.");
         return;
     }
-    renderMovies(currentMovies, movieContainer);
+
+    renderMovies(currentMovies.slice(0, 24), movieContainer);
 });
 
-init();
+favoritesBtn.addEventListener('click', async () => {
+    const favorites = getFavorites();
+    const enriched = await enrichMoviesWithCredits(favorites);
+
+    originalMovies = [...enriched];
+    currentMovies = [...enriched];
+    currentView = 'favorites';
+
+    const sortOption = sortSelect.value;
+    const sorted = sortMovies(sortOption, currentMovies);
+    renderMovies(sorted.slice(0, 24), movieContainer); 
+});
+
+async function enrichMoviesWithCredits(movies) {
+    return await Promise.all(
+        movies.map(async (movie) => {
+            const credits = await fetchCredits(movie.id);
+            return {
+                ...movie,
+                director_name: credits.director,
+                actor_name: credits.actor
+            };
+        })
+    );
+}
+
 
 genreButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
         const genreId = parseInt(button.dataset.id);
-        const filtered = currentMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(genreId));
-        
-        if (filtered.length === 0) {
-            alert('Geen films gevonden in dit genre.');
+
+        let genreMovies;
+        if (currentView === 'favorites' || currentView === 'search') {
+            genreMovies = filterByGenre(genreId, originalMovies);
+        } else {
+            const fetched = await fetchMoviesByGenre(genreId);
+            genreMovies = await enrichMoviesWithCredits(fetched);
         }
 
-        renderMovies(filtered, movieContainer);
+        if (!genreMovies || genreMovies.length === 0) {
+            alert("Geen films gevonden in dit genre.");
+            return;
+        }
+
+        currentMovies = genreMovies;
+
+        const sortOption = sortSelect.value;
+        const sorted = sortMovies(sortOption, currentMovies);
+        renderMovies(sorted.slice(0, 24), movieContainer);
     });
 });
 
+if (resetBtn) {
+    resetBtn.addEventListener('click', async () => {
+        const popular = await fetchPopularMovies();
+        const enriched = await enrichMoviesWithCredits(popular);
+    
+        originalMovies = [...enriched];
+        currentMovies = [...enriched];
+        currentView = 'popular';
+    
+        const sortOption = sortSelect.value;
+        const sorted = sortMovies(sortOption, currentMovies);
+        renderMovies(sorted.slice(0, 24), movieContainer);
+    });
+}
+
 function sortMovies(option, movies) {
     const sorted = [...movies];
-    switch(option) {
+    switch (option) {
         case 'az':
             sorted.sort((a, b) => a.title.localeCompare(b.title));
             break;
@@ -74,10 +142,10 @@ sortSelect.addEventListener('change', () => {
     renderMovies(sorted, movieContainer);
 });
 
-const favoritesBtn = document.getElementById('favorites-btn');
+function filterByGenre(genreId, sourceMovies) {
+    return sourceMovies.filter(movie =>
+        movie.genre_ids && movie.genre_ids.includes(genreId)
+    ).slice(0, 24);
+}
 
-favoritesBtn.addEventListener('click', () => {
-    const favoriteMovies = getFavorites();
-    currentMovies = favoriteMovies;
-    renderMovies(currentMovies, movieContainer);
-});
+init();
