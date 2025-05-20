@@ -1,4 +1,4 @@
-import { fetchPopularMovies,fetchMoviesByGenre, searchMovies, fetchCredits } from './API.js';
+import { API_KEY, BASE_URL, fetchPopularMovies, fetchMoviesByGenre, searchMovies, fetchCredits } from './API.js';
 import { renderMovies } from './UI.js';
 import { getFavorites } from './STORAGE.js';
 
@@ -26,14 +26,18 @@ async function init() {
 
     const sortOption = sortSelect.value;
     const sorted = sortMovies(sortOption, currentMovies);
-    renderMovies(sorted.slice(0, 24), movieContainer);
+    renderMovies(sorted, movieContainer);
 }
 
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const query = searchInput.value.trim();
-    if (!query) return;
-
+    
+    if (query.length < 2) {
+        alert("Voer minimaal 2 tekens in voor de zoekopdracht.");
+        return;
+    }
+    
     let found = await searchMovies(query);
     found = await enrichMoviesWithCredits(found);
     currentMovies = found;
@@ -57,7 +61,7 @@ favoritesBtn.addEventListener('click', async () => {
 
     const sortOption = sortSelect.value;
     const sorted = sortMovies(sortOption, currentMovies);
-    renderMovies(sorted.slice(0, 24), movieContainer); 
+    renderMovies(sorted, movieContainer);
 });
 
 async function enrichMoviesWithCredits(movies) {
@@ -95,7 +99,7 @@ genreButtons.forEach(button => {
 
         const sortOption = sortSelect.value;
         const sorted = sortMovies(sortOption, currentMovies);
-        renderMovies(sorted.slice(0, 24), movieContainer);
+        renderMovies(sorted, movieContainer);
     });
 });
 
@@ -110,7 +114,7 @@ if (resetBtn) {
     
         const sortOption = sortSelect.value;
         const sorted = sortMovies(sortOption, currentMovies);
-        renderMovies(sorted.slice(0, 24), movieContainer);
+        renderMovies(sorted, movieContainer);
     });
 }
 
@@ -149,3 +153,31 @@ function filterByGenre(genreId, sourceMovies) {
 }
 
 init();
+
+
+const sentinel = document.getElementById('scroll-sentinel');
+let currentPage = 3;
+
+const observer = new IntersectionObserver(async (entries) => {
+    if (entries[0].isIntersecting && currentView === 'popular') {
+      console.log("Scroll sentinel is zichtbaar, meer films laden...");
+  
+      const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage}`);
+      const data = await response.json();
+  
+      const newMovies = await enrichMoviesWithCredits(data.results);
+  
+      const movieIds = new Set(currentMovies.map(m => m.id));
+      const uniqueNewMovies = newMovies.filter(m => !movieIds.has(m.id));
+  
+      currentMovies = [...currentMovies, ...uniqueNewMovies];
+  
+      renderMovies(uniqueNewMovies, movieContainer, true);
+      currentPage++;
+    }
+  }, {
+    rootMargin: '200px'
+  });
+  
+  observer.observe(document.getElementById('scroll-sentinel'));
+observer.observe(sentinel);

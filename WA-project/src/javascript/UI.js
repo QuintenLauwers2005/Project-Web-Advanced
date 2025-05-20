@@ -1,8 +1,12 @@
 import { saveFavorite, removeFavorite, isFavorite } from './STORAGE.js';
 import { IMG_BASE_URL } from './API.js';
 
-export function renderMovies(movies, container) {
-    container.innerHTML = '';
+export function renderMovies(movies, container, append = false) {
+    if (!append) {
+        container.innerHTML = '';
+    }
+
+    console.log("Renderen van films:", movies.length, "films. Append?", append);
     movies.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'movie-card';
