@@ -177,5 +177,34 @@ cursor: pointer;
     .favorite-btn {
         align-self: flex-start;
       }
-  }
+
+.genre-btn,
+#reset-btn,
+#favorites-btn {
+  flex: 1 1 auto;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  text-align: center;
+  min-width: 100px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.filter-container {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.genres {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.genre-btn {
+  flex: 0 0 auto;
+}
+
+}
   
