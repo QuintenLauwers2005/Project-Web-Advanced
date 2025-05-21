@@ -11,7 +11,7 @@ header {
     color: #ffffff;
     padding: 1rem;
     text-align: center;
-    text-shadow: 
+    text-shadow:  /*neon-effect titel*/
         0 0 5px #0ff,
         0 0 10px #0ff,
         0 0 20px #0ff,
@@ -28,6 +28,7 @@ input, button{
     margin: 0.5rem;
 }
 
+/*Lay-out van grid waarin film kaarten worden weergegeven*/
 .movie-grid{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -35,6 +36,7 @@ input, button{
     padding: 1rem;
 }
 
+/*Lay-out kaart waarop data film wordt weergegeven*/
 .movie-card{
     background: rgb(228, 228, 228);
     padding: 1rem;
@@ -44,6 +46,7 @@ input, button{
     transition: transform 0.3s, filter 0.3s;
 }
 
+/*Een effect toegevoegd dat voorkomt als je over de kaart met de muis passeert*/
 .movie-card:hover {
     transform: scale(1.05);
     filter: brightness(90%);
@@ -63,6 +66,7 @@ font-size: 1.2rem;
 cursor: pointer;
 }
 
+/*Bepaald de stijl van de search balk*/
 #search-input{
   border-radius: 20px;
   border-color: lightgray;
@@ -79,6 +83,7 @@ cursor: pointer;
   background-color: #ddd;
 }
 
+/*Lay-out voor de home knop*/
 #reset-btn{
   padding: 0.5rem 1rem;
   margin: 0.2rem;
@@ -87,11 +92,12 @@ cursor: pointer;
   cursor: pointer;
   border-radius: 20px;
 }
-
+/*Effect toegevoegd als je met de muis over de home knop passeert*/
 #reset-btn:hover {
   background-color: #ddd;
 }
 
+/*Lay-out favorietenknop*/
 #favorites-btn {
   background-color: red;
   color: white;
@@ -102,11 +108,13 @@ cursor: pointer;
   margin: 0.2rem;
 }
 
+/*Effect dat wordt toegevoegd als je met de muis over de favorites knop passeert.*/
 #favorites-btn:hover {
   background-color: darkred;
   color: white;
 }
 
+/*Bepaalt hoe alles in de filterbalk wordt uitgelijnd en weergegeven*/
 .filter-container {
   display: flex;
   align-items: center;
@@ -114,17 +122,19 @@ cursor: pointer;
   margin: 1rem 0;
   padding: 1rem;
 }
-
+ /*Zorgt ervoor dat de knop niet kleiner wordt als er te weinig plaats is*/
 .filters {
   flex-shrink: 0;
 }
 
+/*Bepalen van de spatiering tussen de genre knoppen*/
 .genres {
   display: flex;
   gap: 0.5rem; 
   flex-wrap: wrap; 
 }
 
+/*Lay out voor de individuele genre knoppen bepalen*/
 .genre-btn {
   padding: 0.5rem 1rem;
   margin: 0.2rem;
@@ -138,7 +148,9 @@ cursor: pointer;
   background-color: #ddd;
 }
 
+/*Aanmaken media voor verandering lay-out van een klein scherm vanaf schermbreedte: 768px */ 
 @media (max-width: 768px) {
+    /*Zet de film-grid in een kolomstructuur i.p.v. raster*/
     .movie-grid {
       display: flex;
       flex-direction: column;
@@ -146,6 +158,7 @@ cursor: pointer;
       gap: 1rem;
     }
   
+    /*Styling van de films/kaarten aanpassen */
     .movie-card {
       display: flex;
       align-items: center;
@@ -156,6 +169,7 @@ cursor: pointer;
       text-align: left;
     }
   
+    /*Aanpassen van de filmposters*/
     .movie-card img {
       width: 160px;
       height:max-content;
@@ -163,21 +177,25 @@ cursor: pointer;
       border-radius: 8px;
     }
   
+    /*Omliggende ruimte tekst en knoppen van de film aanpassen*/
     .movie-card h3,
     .movie-card p,
     .favorite-btn {
       margin: 0.2rem 0;
     }
   
+    /*Zet de tekst en de knop onder elkaar*/
     .movie-card > div {
       display: flex;
       flex-direction: column;
     }
 
+    /*Zorgt ervoor dat de knop links blijft staan*/
     .favorite-btn {
         align-self: flex-start;
       }
 
+/*Schaalbaar maken (home, favorieten, genres)knoppen*/
 .genre-btn,
 #reset-btn,
 #favorites-btn {
@@ -190,18 +208,21 @@ cursor: pointer;
   white-space: nowrap;
 }
 
+/*Zet de filter-container (genreknoppen + sorteeropties) in een kolom*/
 .filter-container {
   flex-direction: column;
   align-items: stretch;
   gap: 0.5rem;
 }
 
+/*Horizontaal scrollbare op mobiele-telefoon*/
 .genres {
   overflow-x: auto;
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
 }
 
+/*Genreknoppen behouden vaste breedte bij scrollen*/
 .genre-btn {
   flex: 0 0 auto;
 }

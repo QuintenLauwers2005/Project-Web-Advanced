@@ -10,13 +10,13 @@
     <header>
         <h1>Movie Explorer</h1>
         <form id="search-form">
-            <input type="text" id="search-input" placeholder="geef mij een filmnaam">
+            <input type="text" id="search-input" placeholder="geef mij een filmnaam"><!--Input vak voor de zoekbalk-->
             <button type="submit" id="search-knop">zoeken</button>
         </form>
     </header>
     <main>
         <div class="filter-container">
-            <section class="filters">
+            <section class="filters"> <!--Aanmaken van een sorteerknop om de volgorde van de voorbeelden van de API te bepalen-->
               <label for="sort-options">Sorteren op:</label>
               <select id="sort-options">
                 <option value="az">Titel A-Z</option>
@@ -27,19 +27,19 @@
               </select>
             </section>
         
-            <section class="genres">
+            <section class="genres"><!--Aanmaken van de genreknoppen om de filmen te onderscheiden per genre-->
               <button class="genre-btn" data-id="28">Actie</button>
               <button class="genre-btn" data-id="35">Komedie</button>
               <button class="genre-btn" data-id="18">Drama</button>
               <button class="genre-btn" data-id="27">Horror</button>
             </section>
 
-            <button id="favorites-btn">Favorieten</button>
-            <button id="reset-btn">Home-page</button>
+            <button id="favorites-btn">Favorieten</button><!--Aanmaken van een favorietenknop, om een overzicht te krijgen van al de gekozen favorieten-->
+            <button id="reset-btn">Home-page</button><!--Aanmaken van een homeknop, om terug te keren naar de oorspronkelijke pagina-->
           </div>
         
-          <div id="movie-container" class="movie-grid"></div>
-          <div id="scroll-sentinel" style="height: 100px; background: rgba(255,0,0,0.2);"></div>
+          <div id="movie-container" class="movie-grid"></div><!--Grid waarin de films weergegeven gaan worden-->
+          <div id="scroll-sentinel" style="height: 100px; background: rgba(255,0,0,0.2);"></div><!--Dit is voor te zien waar het einde van de pagina hoort te zijn voor de observer-->
     </main>
 
     <script type="module" src="src/javascript/APP.js"></script>
